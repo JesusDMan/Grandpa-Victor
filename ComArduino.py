@@ -2,7 +2,8 @@ startMarker = b'<'
 endMarker = b'>'
 ready_msg = 'Arduino is ready!'
 minimum_time_between_presses = 1;
-
+time_for_img = 5
+msg = ''
 #=====================================
 
 #  Function Definitions
@@ -53,13 +54,11 @@ def yes():
     p.kill()
 
 def no():
-    p = subprocess.Popen(f'python "{os.getcwd()}\script.py"')
+    p = subprocess.Popen(f'python "{os.getcwd()}\script_for_no.py"')
     time.sleep(5)
     p.kill()
 
 
-
-     
 #======================================
 
 # THE DEMO PROGRAM STARTS HERE
@@ -70,6 +69,7 @@ import serial
 import time
 import subprocess
 import os
+
     
 print('\n\n')
 
@@ -80,19 +80,26 @@ ser = serial.Serial(serPort, baudRate)
 print("Serial port " + serPort + " opened  Baudrate " + str(baudRate))
 
 waitForArduino()
-msg = ''
+
 time_from_lest_yes = 0
 time_from_lest_no = 0
+p = 0
+current_img = 0
 
 while True:
-    
     msg = recvFromArduino()
+    
     if (msg == 'Yes' and time.time() - time_from_lest_yes > minimum_time_between_presses):
-        yes()
+        if ((time.time() - time_from_lest_yes > time_for_img or current_img != 'Yes') and p):
+            p.kill()
+        p = subprocess.Popen(f'python "{os.getcwd()}\yes.py"')
         time_from_lest_yes = time.time()
+    
     elif (msg == 'No' and time.time() - time_from_lest_no > minimum_time_between_presses):
-        no()
+        if ((time.time() - time_from_lest_no > time_for_img or current_img != 'No') and p):
+            p.kill()
+        p = subprocess.Popen(f'python "{os.getcwd()}\script_for_no.py"')
         time_from_lest_no = time.time()
-
+    
 ser.close
 
