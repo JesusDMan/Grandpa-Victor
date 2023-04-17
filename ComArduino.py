@@ -1,105 +1,42 @@
-startMarker = b'<'
-endMarker = b'>'
-ready_msg = 'Arduino is ready!'
-minimum_time_between_presses = 1;
-time_for_img = 5
-msg = ''
-#=====================================
-
-#  Function Definitions
-
-#=====================================
-
-def sendToArduino(sendStr):
-  ser.write(sendStr)
-
-#======================================
-
-def recvFromArduino():
-  ck = ""
-  x = "" # any value that is not an end- or startMarker
-  
-  # wait for the start character
-  while x != startMarker: 
-    x = ser.read()
-
-  # save data until the end marker is found
-  while x != endMarker:
-    if x != startMarker:
-      ck = ck + x.decode('UTF-8') 
-    x = ser.read()
-  
-  return(ck)
-
-
-#============================
-
-def waitForArduino():
-
-   # wait until the Arduino sends 'Arduino Ready' - allows time for Arduino reset
-   # it also ensures that any bytes left over from a previous message are discarded
-   
-    global startMarker, endMarker
-    
-    msg = ""
-    while msg != ready_msg:
-      msg = recvFromArduino()
-
-    print(f'{msg}\n')
-
-
-def yes():
-    p = subprocess.Popen(f'python "{os.getcwd()}\yes.py"')
-    time.sleep(5)
-    p.kill()
-
-def no():
-    p = subprocess.Popen(f'python "{os.getcwd()}\script_for_no.py"')
-    time.sleep(5)
-    p.kill()
-
-
-#======================================
-
-# THE DEMO PROGRAM STARTS HERE
-
-#======================================
-
 import serial
-import time
-import subprocess
-import os
 
-    
-print('\n\n')
+START_MARKER = b'<'
+END_MARKER = b'>'
+READY_MSG = 'Arduino is ready!'
 
-# NOTE the user must ensure that the serial port and baudrate are correct
-serPort = "COM7"
-baudRate = 9600
-ser = serial.Serial(serPort, baudRate)
-print("Serial port " + serPort + " opened  Baudrate " + str(baudRate))
+SERIAL_PORT = "COM7"
+BAUD_RATE = 9600
+SERIAL_CONNECTION = serial.Serial(SERIAL_PORT, BAUD_RATE)
+print(F'Serial port:{SERIAL_PORT} opened\nBaud rate: {BAUD_RATE}')
 
-waitForArduino()
 
-time_from_lest_yes = 0
-time_from_lest_no = 0
-p = 0
-current_img = 0
+def send_to_arduino(message: bytes):
+    SERIAL_CONNECTION.write(message)
 
-while True:
-    msg = recvFromArduino()
-    
-    if (msg == 'Yes' and time.time() - time_from_lest_yes > minimum_time_between_presses):
-        if ((time.time() - time_from_lest_yes > time_for_img or current_img != 'Yes') and p):
-            p.kill()
-        p = subprocess.Popen(f'python "{os.getcwd()}\yes.py"')
-        time_from_lest_yes = time.time()
-    
-    elif (msg == 'No' and time.time() - time_from_lest_no > minimum_time_between_presses):
-        if ((time.time() - time_from_lest_no > time_for_img or current_img != 'No') and p):
-            p.kill()
-        p = subprocess.Popen(f'python "{os.getcwd()}\script_for_no.py"')
-        time_from_lest_no = time.time()
-    
-ser.close
 
+def receive_from_arduino():
+    message = ""
+    char = ""  # any value that is not an end- or startMarker
+
+    # wait for the start character
+    while char != START_MARKER:
+        char = SERIAL_CONNECTION.read()
+
+    # save data until the end marker is found
+    while char != END_MARKER:
+        if char != START_MARKER:
+            message = message + char.decode('UTF-8')
+        char = SERIAL_CONNECTION.read()
+    return message
+
+
+def wait_for_arduino():
+    message = ""
+    while message != READY_MSG:
+        message = receive_from_arduino()
+
+    print(f'{message}\n\n\n')
+
+
+def close_connection():
+    SERIAL_CONNECTION.close()
