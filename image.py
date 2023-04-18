@@ -10,7 +10,6 @@ class Image:
         self.name: str = name
         self.max_display_time: float = max_display_time
 
-
         self.is_opened: bool = False
         self._process: subprocess.Popen = None
         self._time_of_last_open: float = 0

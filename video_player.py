@@ -12,7 +12,9 @@ class VideoPlayer(object):
         self.__window_name__ = 'video'
         self.video_path = video_path
         self.fps = self._cap.get(cv2.CAP_PROP_FPS)
+
     def stop_video(self):
+        
         self._running = False
 
     def play_video(self):
@@ -22,11 +24,11 @@ class VideoPlayer(object):
 
     def _play_video(self):
         self._player = MediaPlayer(self.video_path)
-
+        self._cap = cv2.VideoCapture(self.video_path)
 
         sleep_seconds = 1 / self.fps
-        print(sleep_seconds)
         cv2.namedWindow(self.__window_name__, cv2.WINDOW_NORMAL)
+        cv2.setWindowProperty(self.__window_name__, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         while True:
             if not self._running:
                 break

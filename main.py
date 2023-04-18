@@ -8,7 +8,7 @@ MAXIMUM_TIME_FOR_IMAGE = 5
 
 IMAGE_PRESENTER_PATH = r'C:\Users\Yuval Mantin\OneDrive\Documents\Arduino\Grandpa-Victor\image_presenter.py'
 
-CONFIGURATION = 'image'
+CONFIGURATION = 'video'
 if CONFIGURATION == 'image':
     YES_IMAGE = Image(name='Yes', image_path='yes.png', presenter_path=IMAGE_PRESENTER_PATH,
                       max_display_time=MAXIMUM_TIME_FOR_IMAGE)
@@ -21,8 +21,6 @@ time_from_last_yes = 0
 time_from_last_no = 0
 
 
-
-
 def present_image(image: Image):
     NO_IMAGE.close()
     YES_IMAGE.close()
@@ -32,6 +30,10 @@ def present_image(image: Image):
 
 def present(name: str):
     global time_from_last_yes, time_from_last_no
+
+    if (name == 'Yes' and time() - time_from_last_yes < MINIMUM_TIME_BETWEEN_PRESSES) or \
+            (name == 'No' and time() - time_from_last_no < MINIMUM_TIME_BETWEEN_PRESSES):
+        return
     print(name)
 
     if name == 'Yes':
@@ -45,10 +47,6 @@ def present(name: str):
         elif CONFIGURATION == 'image':
             item = NO_IMAGE
 
-    if (name == 'Yes' and time() - time_from_last_yes < MINIMUM_TIME_BETWEEN_PRESSES) or \
-            (name == 'No' and time() - time_from_last_no < MINIMUM_TIME_BETWEEN_PRESSES):
-        return
-
     if CONFIGURATION == 'video':
         open_video(item)
     elif CONFIGURATION == 'image':
@@ -61,7 +59,6 @@ def present(name: str):
 
 
 def open_video(video_player: VideoPlayer):
-    print('si!')
     YES_VIDEO.stop_video()
     NO_VIDEO.stop_video()
     sleep(1)
@@ -73,5 +70,4 @@ if __name__ == '__main__':
 
     while True:
         msg = ComArduino.receive_from_arduino()
-        print(msg)
         present(msg)
