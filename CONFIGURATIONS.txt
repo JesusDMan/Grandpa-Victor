@@ -1,0 +1,4 @@
+# Here you can add your configurations: ('music', 'video' or 'image')
+# If you're using 'music', add the mp3 file to THIS FOLDER, and change its name to 'music.mp3'
+# IMPORTANT: No spare spaces!!!
+video

@@ -1,5 +1,5 @@
-import subprocess
-import time
+from subprocess import Popen
+from time import time
 from threading import Thread
 
 
@@ -11,13 +11,13 @@ class Image:
         self.max_display_time: float = max_display_time
 
         self.is_opened: bool = False
-        self._process: subprocess.Popen = None
+        self._process: Popen = None
         self._time_of_last_open: float = 0
 
     def open(self):
-        self._process = subprocess.Popen(rf'python "{self._presenter_path}" {self.name} {self._image_path}')
+        self._process = Popen(rf'python "{self._presenter_path}" {self.name} {self._image_path}')
         self.is_opened = True
-        self._time_of_last_open = time.time()
+        self._time_of_last_open = time()
         Thread(target=self.wait_to_die).start()
 
     def close(self):
@@ -36,4 +36,4 @@ class Image:
     def time_opened(self):
         if not self._process:
             return 0
-        return time.time() - self._time_of_last_open
+        return time() - self._time_of_last_open

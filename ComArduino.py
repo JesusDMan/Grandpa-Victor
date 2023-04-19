@@ -1,4 +1,4 @@
-import serial
+from serial import Serial
 
 START_MARKER = b'<'
 END_MARKER = b'>'
@@ -6,7 +6,7 @@ READY_MSG = 'Arduino is ready!'
 
 SERIAL_PORT = "COM7"
 BAUD_RATE = 9600
-SERIAL_CONNECTION = serial.Serial(SERIAL_PORT, BAUD_RATE)
+SERIAL_CONNECTION: Serial = Serial(SERIAL_PORT, BAUD_RATE)
 print(F'Serial port:{SERIAL_PORT} opened\nBaud rate: {BAUD_RATE}')
 
 
