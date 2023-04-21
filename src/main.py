@@ -85,7 +85,7 @@ def play_music(music_player: MusicPlayer):
         YES_ITEM.play()
 
 
-if __name__ == '__main__':
+def main():
     ComArduino.wait_for_arduino()
 
     while True:
@@ -94,3 +94,7 @@ if __name__ == '__main__':
         # msg = 'Yes' if msg == '1' else 'No'
 
         present(msg)
+
+
+if __name__ == '__main__':
+    main()
