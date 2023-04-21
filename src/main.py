@@ -1,5 +1,5 @@
 from image import Image
-import ComArduino
+from src import ComArduino
 from time import time, sleep
 from video_player import VideoPlayer
 from music_player import MusicPlayer
@@ -8,23 +8,23 @@ MINIMUM_TIME_BETWEEN_PRESSES = 1
 MAXIMUM_TIME_FOR_IMAGE = 5
 
 IMAGE_PRESENTER_PATH = r'image_presenter.py'
-CONFIGURATIONS_FILE_PATH = 'CONFIGURATIONS.txt'
+CONFIGURATIONS_FILE_PATH = '../CONFIGURATIONS.txt'
 
 CONFIGURATION = open(CONFIGURATIONS_FILE_PATH, 'r').readlines()[3]
 print(CONFIGURATION)
 
 if CONFIGURATION == 'image':
-    YES_ITEM = Image(name='Yes', image_path='yes.png', presenter_path=IMAGE_PRESENTER_PATH,
+    YES_ITEM = Image(name='Yes', image_path='../media/yes.png', presenter_path=IMAGE_PRESENTER_PATH,
                      max_display_time=MAXIMUM_TIME_FOR_IMAGE)
-    NO_ITEM = Image(name='No', image_path='no.png', presenter_path=IMAGE_PRESENTER_PATH,
+    NO_ITEM = Image(name='No', image_path='../media/no.png', presenter_path=IMAGE_PRESENTER_PATH,
                     max_display_time=MAXIMUM_TIME_FOR_IMAGE)
 
 elif CONFIGURATION == 'video':
-    YES_ITEM = VideoPlayer(name='Yes', video_path='sample3.mp4')
-    NO_ITEM = VideoPlayer(name='No', video_path='sample.mp4')
+    YES_ITEM = VideoPlayer(name='Yes', video_path='../media/sample3.mp4')
+    NO_ITEM = VideoPlayer(name='No', video_path='../media/sample.mp4')
 
 elif CONFIGURATION == 'music':
-    MUSIC_PATH = 'sample2.mp3'
+    MUSIC_PATH = '../media/sample2.mp3'
     YES_ITEM = NO_ITEM = MusicPlayer(MUSIC_PATH, '~music_player_time_stamps')
     YES_ITEM.reset_song()
 
