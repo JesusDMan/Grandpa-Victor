@@ -29,7 +29,7 @@ elif CONFIGURATION == 'music':
     YES_ITEM.reset_song()
 
 else:
-    print(f'{CONFIGURATION} is not valid.')
+    print(f'Configuration "{CONFIGURATION}" is not valid.')
     exit(1)
 
 time_from_last_yes = 0
