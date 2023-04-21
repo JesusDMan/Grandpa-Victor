@@ -46,10 +46,3 @@ class MusicPlayer:
     def _update_file(self, time_in_song):
         with open(self.log_file, 'w') as f:
             f.write(str(time_in_song))
-
-
-# t = MusicPlayer("sample2.mp3", "temp.txt")
-# t.play_from_beginning()
-# sleep(3)
-# t.pause()
-# print('wa!')
