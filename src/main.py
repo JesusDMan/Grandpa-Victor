@@ -20,11 +20,11 @@ if CONFIGURATION == 'image':
                     max_display_time=MAXIMUM_TIME_FOR_IMAGE)
 
 elif CONFIGURATION == 'video':
-    YES_ITEM = VideoPlayer(name='Yes', video_path='../media/sample3.mp4')
-    NO_ITEM = VideoPlayer(name='No', video_path='../media/sample.mp4')
+    YES_ITEM = VideoPlayer(name='Yes', video_path='../media/aba_yes.mp4')
+    NO_ITEM = VideoPlayer(name='No', video_path='../media/aba_no.mp4')
 
 elif CONFIGURATION == 'music':
-    MUSIC_PATH = '../media/sample2.mp3'
+    MUSIC_PATH = '../media/music.mp3'
     YES_ITEM = NO_ITEM = MusicPlayer(MUSIC_PATH, '~music_player_time_stamps')
     YES_ITEM.reset_song()
 
