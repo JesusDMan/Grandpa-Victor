@@ -1,8 +1,8 @@
-from image import Image
+from src.image import Image
 from src import ComArduino
 from time import time, sleep
-from video_player import VideoPlayer
-from music_player import MusicPlayer
+from src.video_player import VideoPlayer
+from src.music_player import MusicPlayer
 
 MINIMUM_TIME_BETWEEN_PRESSES = 1
 MAXIMUM_TIME_FOR_IMAGE = 5
