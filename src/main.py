@@ -1,8 +1,8 @@
-from src.image import Image
-from src import ComArduino
+from image import Image
+# from src import ComArduino
 from time import time, sleep
-from src.video_player import VideoPlayer
-from src.music_player import MusicPlayer
+from video_player import VideoPlayer
+from music_player import MusicPlayer
 
 MINIMUM_TIME_BETWEEN_PRESSES = 1
 MAXIMUM_TIME_FOR_IMAGE = 5
@@ -86,12 +86,12 @@ def play_music(music_player: MusicPlayer):
 
 
 def main():
-    ComArduino.wait_for_arduino()
+    # ComArduino.wait_for_arduino()
 
     while True:
-        msg = ComArduino.receive_from_arduino()
-        # msg = input()
-        # msg = 'Yes' if msg == '1' else 'No'
+        # msg = ComArduino.receive_from_arduino()
+        msg = input()
+        msg = 'Yes' if msg == '1' else 'No'
 
         present(msg)
 
