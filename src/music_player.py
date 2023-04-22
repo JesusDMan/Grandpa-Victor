@@ -4,8 +4,6 @@ from threading import Thread
 from vlc import MediaPlayer
 from time import time, sleep
 
-add_dll_directory(r'C:\My Apps\VLC')
-
 
 class MusicPlayer:
     def __init__(self, video_path, log_file):
@@ -21,7 +19,6 @@ class MusicPlayer:
 
     def reset_song(self):
         self._update_file(0)
-
 
     def _play_song(self):
         if not path.isfile(self.log_file):
