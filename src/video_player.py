@@ -55,9 +55,3 @@ class VideoPlayer(object):
         self._cap.release()
         self._player.close_player()
         cv2.destroyAllWindows()
-
-# m = VideoPlayer(name='la', video_path='sample3.mp4')
-# m.play_video()
-# sleep(2)
-# m.stop_video()
-# sleep(5)
